@@ -119,10 +119,6 @@ impl KvManager {
             return;
         }
 
-        let Some(ref sink) = self.kv_event_sink else {
-            return;
-        };
-
         if *KV_CACHE_TRACE_ENABLED {
             let timestamp_ms = SystemTime::now()
                 .duration_since(UNIX_EPOCH)
@@ -148,6 +144,10 @@ impl KvManager {
                 "KV cache trace"
             );
         }
+
+        let Some(ref sink) = self.kv_event_sink else {
+            return;
+        };
 
         let event_data = if is_store {
             let num_blocks = full_blocks.len();
